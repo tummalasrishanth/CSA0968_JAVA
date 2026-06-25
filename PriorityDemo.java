@@ -1,28 +1,27 @@
-class PriorityDemo extends Thread {
+class MyTask implements Runnable {
+    private String name;
 
-    public void run() {
-        System.out.println(
-                Thread.currentThread().getName() +
-                " Priority: " +
-                Thread.currentThread().getPriority());
+    MyTask(String name) {
+        this.name = name;
     }
 
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(name + " : " + i);
+        }
+    }
+}
+
+public class PriorityDemo {
     public static void main(String[] args) {
 
-        PriorityDemo t1 = new PriorityDemo();
-        PriorityDemo t2 = new PriorityDemo();
-        PriorityDemo t3 = new PriorityDemo();
+        Thread t1 = new Thread(new MyTask("Thread-1"));
+        Thread t2 = new Thread(new MyTask("Thread-2"));
 
         t1.setPriority(Thread.MIN_PRIORITY);
-        t2.setPriority(Thread.NORM_PRIORITY);
-        t3.setPriority(Thread.MAX_PRIORITY);
-
-        t1.setName("MIN");
-        t2.setName("NORM");
-        t3.setName("MAX");
+        t2.setPriority(Thread.MAX_PRIORITY);
 
         t1.start();
         t2.start();
-        t3.start();
     }
 }
